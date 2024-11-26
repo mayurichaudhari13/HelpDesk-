@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Helpdesk</title>
+    <link rel="stylesheet" href="homepage.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,800">
+    <link rel="icon" href="/images/heldeskicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/images/heldeskicon.png" type="image/x-icon">
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
+ 
+    <script type="text/javascript">
+        function preventBack() {
+            window.history.forward();
+        }
+
+        setTimeout("preventBack()", 0);
+
+        window.onunload = function() {
+            null
+        };
+        </script>
+</head>
+
+<body>
+
+    <div class="container" id="homepage">
+        <img src="/images/helpdesk-removebg-preview.png" alt="" id="logo">
+        <h1 class="Helpdesk animate__animated animate__pulse">Welcome to the Helpdesk</h1>
+
+
+        <form action="/login" method="post" onsubmit="return validateForm()">
+            <label for="who">Who are you:</label>
+            <select name="who" id="whos" onchange="showDepartment()">
+                <option value="Select">Select</option>
+                <option value="admin">Admin</option>
+                <option value="user">User</option>
+            </select>
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <button id="btn_1" class="btn-grad" type="submit">Log In</button>
+            <button class="btn-grad"><a href="/create-account">Create New Account</a></button>
+        </form>
+    </div>
+
+</body>
+
+</html>

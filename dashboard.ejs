@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="/admindashboard.css">
+    <link rel="icon" href="/images/heldeskicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/images/heldeskicon.png" type="image/x-icon">
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
+
+</head>
+
+<body>
+    <h1 style="color: whitesmoke; font-family: system-ui;">Welcome
+        <%= adminUsername %> to Admin Dashboard
+    </h1>
+
+    <!-- Search form -->
+    <form action="/admin-dashboard?email=<%= encodeURIComponent(adminEmail) %>" method="POST">
+        <label style="color: whitesmoke;" for="search">Search by Title:</label>
+        <input type="text" id="search" name="search" placeholder="Enter title">
+        <button class="btn-grad" type="submit">Search</button>
+    </form>
+
+    <div class="ticket-list">
+        <% if (assignedTickets.length> 0) {
+            const sortedTickets = assignedTickets.filter(ticket => ticket.status === 'pending').sort((a, b) => {
+            // Assign priority values for sorting
+            const priorityValues = { high: 3, medium: 2, low: 1 };
+            return priorityValues[b.priority] - priorityValues[a.priority];
+            });
+
+            sortedTickets.forEach(ticket => { %>
+            <div class="ticket" style="z-index: 4;">
+                <h2 class="color_me">
+                    <%= ticket.title %>
+                </h2>
+                <p class="color_me"><strong>Description:</strong>
+                    <%= ticket.description %>
+                </p>
+                <p class="color_me"><strong>Status:</strong>
+                    <%= ticket.status %>
+                </p>
+                <p class="color_me"><strong>Priority:</strong>
+                    <%= ticket.priority %>
+                </p>
+
+                <!-- Download button for ticket data in CSV format -->
+                <form action="/download-ticket-csv" method="POST" style="display: inline; text-align: left;">
+                    <input class="btn-grad" type="hidden" name="ticketId" value="<%= ticket._id %>">
+                    <button class="button-container" type="submit">Download CSV</button>
+                </form>
+
+                <div class="button-container" style="text-align: left; color: whitesmoke;">
+                    <a  href="/chat/<%= ticket._id %>?sender=<%= adminUsername %>&role=admin" class="open-chat">Open
+                        Chat</a>
+                </div>
+                <form action="/update-ticket-status" method="POST" style="text-align: left;">
+                    <input type="text" name="adminemail" id="adminemail" style="display: none;"
+                        value="<%= adminEmail %>">
+                    <input type="hidden" name="ticketId" value="<%= ticket._id %>">
+                    <br>
+                    <label>
+                        <input type="checkbox" name="solved" <% if (ticket.status==='solved' ) { %>checked<% } %>>
+                            Solved
+                            <button class="btn-grad" type="submit" >Update</button>
+                    </label>
+                    <div class="color_flame">
+                        <div class="Use_me" style="border-radius: 12px; z-index: 2; background-color: skyblue;">
+                            <p>
+                                dfsssssssssss<br>
+                                fdsddddddds<br>
+                                ssssssss<br>
+                                ssssssssssss<br>
+                                ssssssss<br>
+                                dfsssssssssss<br>
+                                fdsddddddds<br>
+                                ssssssss<br>
+                                ssssssssssss<br>
+                                ssssssss<br>
+                            </p>
+                        </div>
+                    </div>
+         
+                   
+                       
+                    
+                    
+                    
+                </form>
+            </div>
+            <% }); } else { %>
+                <p>No tickets found.</p>
+                <% } %>
+    </div>
+</body>
+
+</html>

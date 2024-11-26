@@ -1,0 +1,68 @@
+<!-- departmentdashboard.ejs -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Department Dashboard</title>
+    <link rel="stylesheet" href="/departmentdashboard.css">
+    <link rel="icon" href="/images/heldeskicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/images/heldeskicon.png" type="image/x-icon">
+</head>
+    <body>
+    <form action="/login" method="GET" id="logout">
+        <button class="logout-button">Log Out</button>
+    </form>
+    <h1>Welcome,
+        <%= admin.username %>!</h1>
+    <h2>Tickets list for
+        <%= admin.department %>
+    </h2>
+
+    <div class="dashboard-container">
+        <% if (departmentstickets.length > 0) {
+            const sortedTickets = departmentstickets.sort((a, b) => {
+                const priorityValues = { high: 3, medium: 2, low: 1 };
+                return priorityValues[b.priority] - priorityValues[a.priority];
+            });
+        %>
+            <table>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                </tr>
+                <% sortedTickets.forEach(ticket => { %>
+                    <tr>
+                        <td>
+                            <%= ticket.title %>
+                        </td>
+                        <td>
+                            <%= ticket.description %>
+                        </td>
+                        <td>
+                            <%= ticket.priority %>
+                        </td>
+                        <td>
+                            <%= ticket.status %>
+                        </td>
+                    </tr>
+                    <% }); %>
+            </table>
+            <% } else { %>
+                <p>No tickets found.</p>
+                <% } %>
+
+                <form action="/mytickets" method="GET" id="my-tickets-form">
+                        
+                    <input type="hidden" name="adminEmail" value="<%= adminEmail %>">
+
+               
+            </a>
+            <button class="my-tickets-button" type="submit"> My Tickets</button>
+                </form>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,107 @@
+/* departmentdashboard.css */
+
+body {
+    background-image: linear-gradient(111.4deg, rgba(7, 7, 9, 1) 6.5%, rgba(27, 24, 113, 1) 93.2%);
+    background-size: cover;  
+    color: whitesmoke; 
+    font-family: system-ui;
+    font-weight: bolder;
+    position: relative;
+}
+
+
+/* Add this style to remove text underline */
+
+.my-tickets-button {
+    text-decoration: none;
+    position: absolute;
+    left: 10px;
+    top: 5px;
+    background-color: #28a745;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.my-tickets-button:hover {
+    background-color: #218838;
+}
+
+#logout {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+}
+
+
+/* Additional styling if needed */
+
+h1,
+h2 {
+    text-align: center;
+}
+
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Center horizontally */
+    justify-content: space-between;
+    margin: 30px;
+    text-align: center;
+}
+
+h1,
+h2 {
+    color: whitesmoke;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+button {
+    background-color: #FF4B2B;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: #FF7043;
+}
+
+table {
+    margin: 20px;
+    width: 80%;
+    border-collapse: collapse;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+}
+
+th,
+td {
+    padding: 15px;
+    background-color: whitesmoke;
+    color: #333;
+    transition: transform 0.2s ease;
+    font-weight: bold;
+    border: 3px solid #000;
+}
+
+th {
+    text-align: left;
+    background-color: #ff7b25;
+    color: #fff;
+}
+
+tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+tbody tr:hover td {
+    transform: scale(1.05);
+}

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket System</title>
+    <link rel="stylesheet" href="/ticket.css">
+    <link rel="icon" href="/images/heldeskicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/images/heldeskicon.png" type="image/x-icon">
+</head>
+
+<body class="me_me">
+
+    <div class="container">
+
+        <div id="white_click" class="create-ticket" onclick="white()">
+            <h1 id="colo" style="color: whitesmoke; font-family: system-ui; position: relative; bottom: 0px;">Create a
+                new ticket</h1>
+
+            <form id="new" class="form_change" action="/create-ticket" method="POST" onsubmit="return validateForm()">
+                <!-- Create Ticket Form -->
+                <label id="colo4" style="color: whitesmoke;" for="department">Departments:</label>
+                <select name="department" id="department">
+                    <option value="Select">Select</option>
+                    <option value="General Inquiries">General Inquiries</option>
+                    <option value="Customer Support">Customer Support</option>
+                    <option value="Human Resources">Human Resources</option>
+                    <option value="Finance and Accounting">Finance and Accounting</option>
+                    <option value="Marketing and Communications">Marketing and Communications</option>
+                    <option value="Sales">Sales</option>
+                    <option value="Legal and Compliance">Legal and Compliance</option>
+                    <option value="Project Management">Project Management</option>
+                    <option value="Scheduling and Reservations">Scheduling and Reservations</option>
+                    <!-- Add other options as needed -->
+                </select>
+                <input type="text" name="email" id="email" style="display: none;" value="<%= email %>">
+                <label id="colo1" style="color: whitesmoke;" for="title">Title:</label>
+                <input type="text" id="title" name="title" required>
+                <label id="colo2" style="color: whitesmoke;" for="description">Description:</label>
+                <textarea id="description" name="description" required></textarea>
+                <label id="colo3" style="color: whitesmoke;" for="priority">Priority:</label>
+                <select name="priority" id="priority">
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+                <div class="button-container">
+                    <button id="select" type="submit">Create Ticket</button>
+                </div>
+            </form>
+            <form id="new1" class="form_change" action="/login" method="GET">
+                <button id="select1" class="containers">Log Out</button>
+            </form>
+        </div>
+
+        <div id="new2" class="ticket-history">
+            <h1 style="font-family: system-ui; color: whitesmoke; position: relative; bottom: 7px;">Ticket History For
+                <%= username %>
+            </h1>
+            <!-- Ticket History Table -->
+            <% if (userTickets.length> 0) { %>
+                <div class="show_me" style="overflow-y: auto; max-height: 570px;">
+                    <table>
+                        <!-- Table Header -->
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Department</th>
+                                <th>Description</th>
+                                <th>Priority</th>
+                                <th>Status</th>
+                                <th>Chat</th>
+                            </tr>
+                        </thead>
+                        <!-- Table Body -->
+                        <tbody>
+                            <% userTickets.slice().reverse().forEach(ticket=> { %>
+                                <tr>
+                                    <td>
+                                        <%= ticket.title %>
+                                    </td>
+                                    <td>
+                                        <%= ticket.department %>
+                                    </td>
+                                    <td>
+                                        <%= ticket.description %>
+                                    </td>
+                                    <td>
+                                        <%= ticket.priority %>
+                                    </td>
+                                    <td>
+                                        <%= ticket.status %>
+                                    </td>
+                                    <% if (ticket.status==='pending' ) { %>
+                                        <td><a href="/chat/<%= ticket._id %>?sender=<%= username %>&role=user"
+                                                id="select2" class="open-chat">Open Chat</a></td>
+                                        <% } else { %>
+                                            <td>Solved</td>
+                                            <% } %>
+                                </tr>
+                                <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+                <% } else { %>
+                    <h1>No tickets found😊</h1>
+                    <% } %>
+        </div>
+    </div>
+
+    <script>
+        function validateForm() {
+            var department = document.getElementById("department").value;
+            // Check if the selected department is "Select"
+            if (department === "Select") {
+                alert("Please select a department");
+                return false; // Prevent form submission
+            }
+            return true; // Allow form submission
+        }
+
+         </script>
+
+</body>
+
+</html>

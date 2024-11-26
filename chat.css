@@ -1,0 +1,221 @@
+* {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+
+/* Set the background color for the whole page */
+
+body {
+    background-image: linear-gradient(111.4deg, rgba(7, 7, 9, 1) 6.5%, rgba(27, 24, 113, 1) 93.2%);
+    /* Light orange background */
+    font-family: 'Montserrat', sans-serif;
+}
+
+
+/* Header styling */
+
+.header {
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+.header-title {
+    background-color: #87bdd8;
+    box-shadow: 1px 1px 1px 1px whitesmoke;
+}
+
+
+/* Chat box styling */
+
+#chatBox {
+    background-color: #fff;
+    /* White chat box background */
+    border: 1px solid black;
+    box-shadow: 2px 2px 2px 2px black;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 10px;
+    max-width: 100%;
+    max-height: 100vh;
+    overflow-y: scroll;
+    height: 75vh;
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+}
+
+#chatBox::-webkit-scrollbar {
+    display: none;
+}
+
+.btn-grad {
+    background: #ff7b25;
+    height: 2.1rem;
+
+    position: relative;
+    top: 5px;
+    padding: 10px 35px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: rgb(9, 9, 9);
+    border-radius: 7px;
+}
+
+#glow {
+    height: 2.1rem;
+    
+    position: relative;
+    top: 5px;
+}
+
+.btn-grad:hover {
+    background-position: right center;
+    /* change the direction of the change here */
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Message styling */
+
+.message {
+    display: flex;
+    align-items: flex-start;
+    margin: 10px 0;
+}
+
+.message img {
+    max-width: 50px;
+    max-height: 50px;
+    margin-right: 10px;
+}
+
+.chat-image {
+    max-width: 150px;
+    max-height: 150px;
+}
+
+
+/* Regular user message bubble */
+
+.message.user {
+    background-color: #007bff;
+    /* Blue user message bubble */
+    color: white;
+    padding: 5px 10px;
+    border-radius: 10px;
+    align-self: flex-start;
+}
+
+
+/* System message styling */
+
+.message.system {
+    background-color: #f0f0f0;
+    color: #777;
+    padding: 5px 10px;
+    border-radius: 10px;
+    align-self: center;
+    font-style: italic;
+}
+
+
+/* Input and button styling */
+
+#messageInput {
+    width: 65%;
+    height: 2.3rem;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 8px;
+    margin-left: 15px;
+    margin-top: 20px;
+    border: 1px solid black;
+    box-shadow: 2px 2px 2px 2px black;
+}
+
+#imageInput {
+    width: 9%;
+    height: 2.3rem;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 12px;
+}
+
+button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    /* Blue button background */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    height: 2em;
+}
+
+button:hover {
+    background-color: #0056b3;
+    /* Darker blue on hover */
+}
+
+
+/* Style for file input */
+
+.custom-file-input {
+    display: inline-block;
+    padding: 8px 12px;
+    background-color: #007bff;
+    /* Blue file input background */
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+/* Style for Send Image button */
+
+#sendImageButton {
+    padding: 8px 12px;
+    background-color: #007bff;
+    /* Blue send image button background */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+/* Style for selected file name display */
+
+.selected-file {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #777;
+}
+
+p {
+    margin: 2%;
+    background-image: linear-gradient(111.4deg, rgba(7, 7, 9, 1) 6.5%, rgba(27, 24, 113, 1) 93.2%);
+    /* Blue paragraph background */
+    color: white;
+    padding: 5px 10px;
+    border-radius: 10px;
+    align-self: flex-start;
+    max-width: 30%;
+    /* Set a maximum width for the bubble */
+    word-wrap: break-word;
+}
+
+.images {
+    margin-left: 5%;
+    height: 150px;
+    width: 150px;
+}

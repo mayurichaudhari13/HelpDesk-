@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Chat</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <link rel="stylesheet" href="/chat.css">
+    <link rel="icon" href="/images/heldeskicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/images/heldeskicon.png" type="image/x-icon">
+</head>
+
+<body>
+
+
+    <div class="header">
+        <div>
+            <h1 class="header-title">
+                Chat with <%= role === 'admin'
+                  ? (userDetails && userDetails.user
+                      ? `${userDetails.user.username} (User)`
+                      : 'Unknown Admin')
+                  : (userDetails && userDetails.admin
+                      ? `${userDetails.admin.username} (Admin)`
+                      : 'Unknown User') %>
+              </h1>
+        </div>
+    </div>
+
+
+    <!-- ... Other HTML content ... -->
+    <div id="chatBox">
+        <% for (const message of chatHistory) { %>
+            <div class="message">
+                <% if (message.messageType === 'text') { %>
+
+                    <% } else if (message.messageType === 'image') { %>
+                        <!-- Display image message -->
+
+                        <img src="/uploads/<%= message.message %>" alt="Image" class="chat-image" style="max-width: 20px; max-height: 20px;">
+                        <% } %>
+            </div>
+            <% } %>
+    </div>
+    <!-- ... Other HTML content ... -->
+
+    <input style="box-shadow: .5px .5px .5px .5px black; border: 1px solid black;" type="text" id="messageInput" placeholder="Type your message...">
+    <button class="btn-grad" onclick="sendMessage()">Send</button>
+    <input type="file" id="imageInput">
+    <button id="glow" class="btn-grad" onclick="sendImage()">Send Image</button>
+
+    <script>
+        // Calculate new dimensions while maintaining aspect ratio
+
+        // Initialize socket connection
+        const socket = io();
+
+        // Emit a chat initiation event
+        socket.emit('chatInit', {
+            userId: '<%= userDetails.user._id %>',
+            adminId: '<%= userDetails.admin._id %>',
+            ticketId: '<%= ticket._id %>' // Pass the ticket ID
+        });
+
+        // Function to send chat messages
+        function sendMessage() {
+            const message = document.getElementById('messageInput').value;
+            socket.emit('chatMessage', {
+                sender: '<%= sends %>',
+                message,
+                ticketId: '<%= ticket._id %>',
+                messageType: 'text' // Indicate that this is a text message
+            });
+            // Clear input field after sending
+            document.getElementById('messageInput').value = '';
+        }
+
+        // Listen for incoming chat messages
+        const senderInfo = '<%= sends %>';
+
+        socket.on('message', ({
+            sender,
+            message
+        }) => {
+            // Handle and display messages (text or image)
+            const displaySender = sender === senderInfo ? 'You' : sender;
+            const chatBox = document.getElementById('chatBox');
+            chatBox.innerHTML += `<p><strong>${displaySender}:</strong> ${message}</p>`;
+
+
+        });
+
+        socket.on('image', ({
+            sender,
+            message
+        }) => {
+
+            const chatBox = document.getElementById('chatBox');
+            const imageSrc = `/uploads/${message}`; // Construct the URL using the image name and the path to the uploads folder
+            const displaySender = sender === senderInfo ? 'You' : sender;
+            chatBox.innerHTML += `
+    <div class="message">
+      <p><strong>${displaySender}:</strong></p>
+    </div>
+      <div class="images"><img src="${imageSrc}" alt="Image" class="chat-image" style="max-width: 80px;"><div>
+    
+  `;
+
+            // Scroll to the bottom of the chat box to show the latest message
+            chatBox.scrollTop = chatBox.scrollHeight;
+        });
+
+        socket.on('chatHistory', (chatHistory) => {
+            const chatBox = document.getElementById('chatBox');
+            chatBox.innerHTML = '';
+
+            for (const message of chatHistory.messages) {
+                const displaySender = message.sender === senderInfo ? 'You' : message.sender;
+
+                if (message.messageType === 'text') {
+                    chatBox.innerHTML += `<p><strong>${displaySender}:</strong> ${message.message}</p>`;
+                }
+
+                if (message.messageType === 'image') {
+                    const imageSrc = `/uploads/${message.message}`;
+                    chatBox.innerHTML += `
+        <div class="message">
+          <p><strong>${displaySender}:</strong></p>
+        </div>
+    
+        <div><img  class="images" src="${imageSrc}" alt="Image">
+          </div>
+      `;
+                }
+            }
+
+            // Scroll to the bottom of the chat box to show the latest messages
+            chatBox.scrollTop = chatBox.scrollHeight;
+        });
+
+        function sendImage() {
+            const imageInput = document.getElementById('imageInput');
+            const imageFile = imageInput.files[0];
+            if (!imageFile) {
+                return; // No image selected
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const imageBase64 = event.target.result;
+                socket.emit('chatImage', {
+                    sender: '<%= sends %>',
+                    image: imageBase64,
+                    ticketId: '<%= ticket._id %>',
+                    messageType: 'image' // Indicate that this is an image message
+                });
+            };
+            reader.readAsDataURL(imageFile);
+
+            // Clear input field after sending
+            imageInput.value = '';
+        }
+    </script>
+</body>
+
+</html>
